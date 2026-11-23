@@ -5,11 +5,19 @@ lombok = "1.18.48"
 jetbrains-annotations = "26.1.0"
 java = "27"
 
+jakarta-websocket = "2.2.0"
+grizzly-server = "2.2.0"
+jackson = "3.3.0"
+
 [libraries]
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version.ref = "junit" }
 
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrains-annotations" }
+
+jakarta-websocket = { group = "jakarta.websocket", name = "jakarta.websocket-api", version.ref = "jakarta-websocket" }
+tyrus-server = { group = "org.glassfish.tyrus", name = "tyrus-container-grizzly-server", version.ref = "grizzly-server" }
+jackson = { group = "tools.jackson.core", name = "jackson-databind", version.ref = "jackson" }
 
 [plugins]

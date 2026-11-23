@@ -42,6 +42,10 @@ dependencies {
 
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
+
+    implementation(libs.jackson)
+    compileOnly(libs.jakarta.websocket)
+    implementation(libs.tyrus.server)
 }
 
 tasks.withType<Test> {
