@@ -1,49 +1,25 @@
 package com.server;
 
-import com.server.packets.HelloPacket;
-import jakarta.websocket.DeploymentException;
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.Session;
-import jakarta.websocket.server.ServerEndpoint;
-import org.glassfish.tyrus.server.Server;
-import org.jetbrains.annotations.NotNull;
-import tools.jackson.databind.ObjectMapper;
+import com.server.comms.WebsocketContainer;
+import com.server.data.DatabaseManager;
 
-public class Main implements Runnable {
-    protected static ObjectMapper json;
+public class Main {
 
     static void main() {
-        new Main().run();
+        new Main().init();
     }
 
-    @Override
-    public void run() {
-        Server server = new Server("localhost", 8888, "/", null, Main.Endpoint.class);
-        json = new ObjectMapper();
+    public void init() {
+        DatabaseManager dm = new DatabaseManager(System.getenv("JOOQ_DB_URL"), System.getenv("JOOQ_DB_USER"), System.getenv("JOOQ_DB_PASSWORD"));
+        WebsocketContainer ws = new WebsocketContainer("localhost", 8888);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Shutdown.");
-            server.stop();
+            ws.stop();
         }));
 
-        try {
-            server.start();
+        ws.start();
 
-            while (true) {
-                Thread.onSpinWait();
-                Thread.sleep(Long.MAX_VALUE);
-            }
-        } catch (DeploymentException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @ServerEndpoint(value = "/api")
-    public static class Endpoint {
-        @OnMessage
-        public void onMessage(@NotNull Session session, @NotNull String message) throws Exception {
-            System.out.println(message);
-            session.getAsyncRemote().sendText(json.writeValueAsString(new HelloPacket("Hello World!")));
-        }
+        System.out.println(dm.getBase());
     }
 }
