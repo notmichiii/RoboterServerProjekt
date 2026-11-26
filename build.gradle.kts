@@ -111,7 +111,7 @@ jooq {
 tasks.jar {
     dependsOn("fatJar")
     manifest {
-        attributes["Main-Class"] = mainClass;
+        attributes["Main-Class"] = mainClass
     }
 }
 
@@ -119,7 +119,7 @@ tasks.register<Jar>("fatJar") {
     description = "Creates a so called 'fatJar' including all of the applications dependencies."
     group = JavaBasePlugin.BUILD_TASK_NAME
     manifest {
-        attributes["Main-Class"] = mainClass;
+        attributes["Main-Class"] = mainClass
     }
 
     archiveBaseName = "${rootProject.name}-fat"
